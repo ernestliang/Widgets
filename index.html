@@ -106,11 +106,17 @@ export default {
                     </div>
                 </div>
                 <!-- Maybank Name Display -->
-                <div class="row align-items-center mt-3">
+                <div class="row align-items-center mt-3" v-if="false">
                     <div class="col">
-                        <label for="mbbNameField" class="form-label">Customer MBB Name:</label>
-                        <input type="text" class="form-control" id="mbbNameField" v-model="memberData.mbbName">
-                        <h6 style="color:red;"> {{errorMessageName}} </h6>
+                        <div>
+                            <label for="mbbNameField" class="form-label">Customer MBB Name:</label>
+                        </div>
+                        <div class="d-block">
+                            <input type="text" class="form-control" id="mbbNameField" v-model="memberData.mbbName">
+                        </div>
+                        <div>
+                            <h6 style="color:red;"> {{errorMessageName}} </h6>
+                        </div>
                     </div>
                 </div>
                 <!-- Update & Clear Buttons -->
@@ -188,7 +194,7 @@ export default {
                 this.memberCode = ""
             },
             updateData: function() {
-                if (this.memberData.mbbCode?.length > 5) {
+                if (this.memberData.mbbCode?.length > 6) {
                     this.memberData.mbbCode = ""
                     this.errorMessageCode = "MBB Code cannot exceed 5 characters. Please input again."
                 }
@@ -206,6 +212,9 @@ export default {
                     })
                     .catch(err => {
                         this.errorMessage = err.message
+                    })
+                    .finally(() => {
+                        this.memberData = {}
                     })
                 }
             },
