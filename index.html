@@ -107,7 +107,7 @@ export default {
                 </div>
                 <!-- Maybank Name Display -->
                 <div class="row align-items-center mt-3" v-if="false">
-                    <div class="col">
+                    <div class="col" style="display: inline-block;">
                         <div>
                             <label for="mbbNameField" class="form-label">Customer MBB Name:</label>
                         </div>
@@ -121,11 +121,12 @@ export default {
                 </div>
                 <!-- Update & Clear Buttons -->
                 <div class="row align-items-center mt-3">
-                    <div class="col">
+                    <div class="col-2">
                         <button type="button" class="btn btn-primary" @click="updateData">Update Data</button>
-                        &nbsp;
-                        <h6 v-if="updateSuccess" style="color: green;">Data updated successfully.</h6>
                         <!-- <button type="button" class="btn btn-danger" @click="clearData">Clear Inputs</button> -->
+                    </div>
+                    <div class="col-3 text-left">
+                        <h4 v-if="updateSuccess" style="color: green;">{{updateStatus}}</h4>
                     </div>
                 </div>
             </div>
@@ -155,6 +156,7 @@ export default {
                 errorMessageCode: "",
                 showSpecial: true,
                 updateSuccess: false,
+                updateStatus: "",
             }
         },
         methods: {
@@ -209,6 +211,8 @@ export default {
                         this.errorMessageCode = ""
                         this.errorMessageName = ""
                         this.updateSuccess = true
+                        this.updateStatus = `${this.memberCode} updated successfully.`
+                        this.memberCode = ""
                     })
                     .catch(err => {
                         this.errorMessage = err.message
