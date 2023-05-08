@@ -188,11 +188,11 @@ export default {
                 this.memberCode = ""
             },
             updateData: function() {
-                if (this.memberData.mbbCode.length > 5) {
+                if (this.memberData.mbbCode?.length > 5) {
                     this.memberData.mbbCode = ""
                     this.errorMessageCode = "MBB Code cannot exceed 5 characters. Please input again."
                 }
-                else if (this.memberData.mbbName.length > 50) {
+                else if (this.memberData.mbbName?.length > 50) {
                     this.memberData.mbbName = ""
                     this.errorMessageName = "MBB Name cannot exceed 50 characters. Please input again."
                 }
@@ -205,7 +205,7 @@ export default {
                         this.updateSuccess = true
                     })
                     .catch(err => {
-                        console.log(err)
+                        this.errorMessage = err.message
                     })
                 }
             },
