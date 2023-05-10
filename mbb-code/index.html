@@ -140,6 +140,8 @@ export default {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const apiURL = "https://alpha.returnlegacy.com/rlportalapi"
+    const apiProdURL = "https://webservice.returnlegacy.com.my"
+    const apiDevURL = "https://alpha.returnlegacy.com/rlportalapi"
 
     const app = Vue.createApp({
         el: "#app",
@@ -169,7 +171,7 @@ export default {
             selectUser: async function() {
                 this.updateSuccess = false
                 this.isLoading = true
-                await axios.get(`${apiURL}/api/testing/member/code/${this.memberCode}`)
+                await axios.get(`${apiDevURL}/api/testing/member/code/${this.memberCode}`)
                     .then(res => {
                         debugger;
                         if (res.data == null) {
@@ -205,7 +207,7 @@ export default {
                     this.errorMessageName = "MBB Name cannot exceed 50 characters. Please input again."
                 }
                 else {
-                    axios.put(`${apiURL}/api/testing/member`, this.memberData)
+                    axios.put(`${apiDevURL}/api/testing/member`, this.memberData)
                     .then(res => {
                         // this.memberData = res.data
                         this.errorMessageCode = ""

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/vue@3.0.2"></script>
+    </head>
+    <body>
+        <div id="app">
+           <child-component :message="message" @send-message="receiveMessage" @send-close="receiveClose"></child-component>
+            <!-- <child-component :message="message"></child-component> -->
+            <!-- This will make a BUTTON with the @click event of UPDATE MESSAGE. -->
+            <p>Message from the child component: {{ message }}</p>
+        </div>
+    </body>
+</html>
+<script>
+
+    const app = Vue.createApp({
+        data() {
+            return {
+                message: "Hello from main!"
+            }
+        },
+        methods: {
+            // updateMessage(newMessage) {
+            //     this.message = newMessage
+            // }
+            receiveMessage(recMsg) {
+                alert(recMsg)
+            },
+            receiveClose() {
+                alert("closed")
+            }
+        },
+    })
+
+
+
+    app.component( "childComponent", {
+        name: "child-component",
+        template: `
+            <div>
+                <input type="text" v-model="newMessage">
+                <button type="button" @click="sendMessage">Click to send</button>
+                <button type="button" @click="sendClose">Click to close</button>
+            </div>
+        `,
+        data() {
+            return {
+                newMessage: "Hello from the child"
+            }
+        },
+        methods: {
+            sendMessage() {
+                this.$emit('sendMessage', this.newMessage);
+                // alert(this.newMessage)
+            },
+            sendClose() {
+                this.$emit('sendClose')
+                // alert("Closed")
+            }
+        },
+        emit: ['sendMessage', 'sendClose']
+    })
+
+    // export default {
+    //     components: {
+    //         childComponent
+    //     },
+    //     data() {
+    //         return {
+    //             message: "Hello from parent"
+    //         }
+    //     },
+    //     methods: {
+    //         updateMessage(newMessage) {
+    //             this.message = newMessage
+    //         }
+    //     }
+    // }
+
+    app.mount('#app')
+</script>

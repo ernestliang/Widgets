@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/vue@3.0.2"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body class="p-3">
+        <div id="mainApp" class="container-fluid p-5">
+            <!-- Main Title Row with the title and dropdown -->
+            <div class="row">
+                <div class="col-8">
+                    <h2>Return Legacy Review Inspector</h2>
+                </div>
+                <div class="col-4 text-right">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="statusFilter" data-bs-toggle="dropdown">{{selectedFilter}}</button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" @click="updateFilterStatus(-1)">All</a></li>
+                            <li><a class="dropdown-item" @click="updateFilterStatus(0)">Pending</a></li>
+                            <li><a class="dropdown-item" @click="updateFilterStatus(1)">Approved</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <hr/>
+            <br/>
+            <!-- This is the top row of the table -->
+            <!--  ID > Code > Name > Data > Approve  -->
+            <div class="row">
+                <div class="col-2 text-center">
+                    <h3>ID</h3>
+                </div>
+                <div class="col-2 text-center">
+                    <h3>Code</h3>
+                </div>
+                <div class="col-2 text-center">
+                    <h3>Name</h3>
+                </div>
+                <div class="col-2 text-center">
+                    <h3>Date</h3>
+                </div>
+                <div class="col-2 text-center">
+                    <h3>Approval Status</h3>
+                </div>
+                <div class="col-2 text-center"></div>
+            </div>
+            <!-- End of the top table row -->
+
+            <!-- Iterative rows that automatically generated from the data we pull w/ the API -->
+            <div class="row" v-for="review in reviewList">
+                <div class="col-2 text-center">
+                    <h5>{{review.id}}</h5>
+                    <!-- <h5>{{review.memberId}}</h5> -->
+                </div>
+                <div class="col-2 text-center">
+                    <h5>{{review.memberCode}}</h5>
+                </div>
+                <div class="col-2 text-center">
+                    <h5>{{review.memberName}}</h5>
+                </div>
+                <div class="col-2 text-center">
+                    <h5>{{review.reviewDate}}</h5>
+                </div>
+                <div class="col-2 align-items-center">
+                    <div class="form-check form-switch align-items-center">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" @change="toggleStatus(review)" :checked="review.approveRejectStatus">
+                    </div>
+                </div>
+                <div class="col-2 text-center">
+                    <button type="button" class="btn btn-secondary" @click="viewDetails(review)" data-bs-toggle="modal" data-bs-target="#detailsModal">View more details</button>
+
+                    <button type="button" class="btn btn-secondary" @click="" data-bs-toggle="modal" data-bs-target="#detailsModal">View more details</button>
+                </div>
+            </div>
+
+            <!-- Modal Dialog to view extra details of each reviewer -->
+            <div class="modal fade" id="detailsModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Customer Data Review</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h6>ID: {{reviewResponse.id}}</h6>
+                            <h6>Member ID: {{reviewResponse.memberId}}</h6>
+                            <h6>Member Name: {{reviewResponse.memberName}}</h6>
+                            <h6>Q1 Score: {{reviewResponse.q1}}</h6>
+                            <h6>Q2 Score: {{reviewResponse.q2}}</h6>
+                            <h6>Q3 Score: {{reviewResponse.q3}}</h6>
+                            <h6>Q4 Score: {{reviewResponse.q4}}</h6>
+                            <h6>Q5 Score: {{reviewResponse.q5}}</h6>
+                            <h6>Q6 Score: {{reviewResponse.q6}}</h6>
+                            <h6>Q7 Score: {{reviewResponse.q7}}</h6>
+                            <h6>Q8 Score: {{reviewResponse.q8}}</h6>
+                            <h6>Q9 Score: {{reviewResponse.q9}}</h6>
+                            <h6>Text Review: {{reviewResponse.review}}</h6>
+                            <h6>Review Date: {{reviewResponse.reviewDate}}</h6>
+                            <h6>Approve Reject Status: {{reviewResponse.approveRejectStatus}}</h6>
+                            <h6>Approve Reject Date: {{reviewResponse.approveRejectDate}}</h6>
+                            <h6>Image 1 Link: {{reviewResponse.img1}}</h6>
+                            <h6>Image 2 Link Score: {{reviewResponse.img2}}</h6>
+                            <h6>Image Root Path: {{reviewResponse.imgRootPath}}</h6>
+                            <h6>Image Moxi Path: {{reviewResponse.imgMoxiPath}}</h6>
+                            <h6>Image Base 641: {{reviewResponse.imgBase641}}</h6>
+                            <h6>Image Base 642: {{reviewResponse.imgBase642}}</h6>
+                            <h6>Comment(s): {{reviewResponse.comment}}</h6>
+                            <h6>Remark(s): {{reviewResponse.remarks}}</h6>
+                            <h6>Order Redeem ID: {{reviewResponse.redeemOrderId}}</h6>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Modal Dialog in VUE TEMPLATE form -->
+            <!-- <modal-dialog :visible="showDialog" :content="showContent" @close-me="toggleDialog"></modal-dialog> -->
+        </div>
+    </body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const reviewListURL = "https://alpha.returnlegacy.com/rlportalapi/api/campaign/moxi/reviews"
+    const reviewQuestionsURL = "https://alpha.returnlegacy.com/rlportalapi/api/campaign/moxi/review/id/"
+
+    const mainApp = Vue.createApp({
+        data() {
+            return {
+                // The STATUS of the order you wish to retrieve
+                // Default is ALL (-1); Approved is (0), and Pending is (1)
+                filterStatus: -1,
+
+                // Next is the list where we will dump all the REVIEWS into.
+                // This will be an ARRAY of OBJECTS
+                reviewList: [],
+
+                // This will be the SINGLE OBJECT that holds the specific details of the questions of a reviewer
+                reviewResponse: {},
+
+                filterList: ["All", "Pending", "Approved"],
+                selectedFilter: "All"
+            }
+        },
+        methods: {
+            // Function to populate the table
+            // Will be called in various places throughout the code as necessary
+            populateTable: async function() {
+                await axios.get(`${reviewListURL}/status/${this.filterStatus}`)
+                .then(res => {
+                    // Once we call the API to return the Reviews in the form of an ARRAY of OBJECTS,
+                    // we make it so that reviewList copies everything inside
+                    this.reviewList = res.data
+                })
+            },
+
+            // Function to filter the reviews by status
+            // This is NOT the Individual toggle, that is another function
+            updateFilterStatus: function(newStatus) {
+                this.filterStatus = newStatus
+                this.selectedFilter = this.filterList[(newStatus + 1)]
+                this.populateTable()
+            },
+
+            // Function to toggle the status of EACH REVIEW
+            // This is NOT the Dropdown toggle, that is another function
+            toggleStatus: async function(target_review) {
+                if (target_review.approveRejectStatus == 1) {
+                    target_review.approveRejectStatus = 0
+                }
+                else {
+                    target_review.approveRejectStatus = 1
+                }
+                var target_index = reviewList.findIndex(obj => obj.id == target_review.id)
+                // We replace the attribute of the object using the index we assigned in the v-for
+                this.reviewList[target_index] = target_review
+
+            },
+
+            // Function to call the modal and populate it with the information of the target review
+            viewDetails: function(target_review) {
+                axios.get(`${reviewQuestionsURL}${target_review.id}`)
+                // The response is an ARRAY of only ONE OBJECT
+                .then(res => {
+                    extractedArray = Object.values(res)[0]
+                    this.reviewResponse = extractedArray[0]
+                })
+            }
+        },
+        mounted() {
+            this.populateTable();
+        }
+    })
+
+    const modalDialog = {
+        name: "modal-dialog",
+        props: ['closeMe'],
+        template: `
+            <div v-show="visible" class="modal" id="detailsModal" style="display: block">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{content}}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="closeMe">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `,
+        data() {
+            return {
+
+            }
+        },
+        methods: {
+            closeMe: function() {
+                this.$emit('closeMe')
+            },
+            
+        }
+    }
+
+    mainApp.mount('#mainApp')
+</script>
