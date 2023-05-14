@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/vue@3.0.2"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <style>
+            	/* Style to give borders to the rows and col */
+                .diy_border {
+                    border: 3px solid black;
+                }
+        </style>
+    </head>
+    <body>
+        <div id="mainApp" class="container-fluid p-3">
+            <!-- Title and Filter Section -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <!-- Main Title/Logo goes here -->
+                            <h2>Moxi-Review Data & Response Table</h2>
+                        </div>
+                        <div class="col-3">
+                            <!-- Date Filter goes here -->
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dateFilter" data-bs-toggle="dropdown">{{dateDispFilter}}</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" @click="updateDateFilter(0)">All</a></li>
+                                    <li><a class="dropdown-item" @click="updateDateFilter(1)">15th May</a></li>
+                                    <li><a class="dropdown-item" @click="updateDateFilter(2)">22nd May</a></li>
+                                    <li><a class="dropdown-item" @click="updateDateFilter(3)">29th May</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <!-- Approval Status Filter goes here -->
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="statusFilter" data-bs-toggle="dropdown">{{approvalDispFilter}}</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" @click="updateApprovalFilter(0)">All</a></li>
+                                    <li><a class="dropdown-item" @click="updateApprovalFilter(1)">Approved</a></li>
+                                    <li><a class="dropdown-item" @click="updateApprovalFilter(2)">Pending</a></li>
+                                    <li><a class="dropdown-item" @click="updateApprovalFilter(3)">Rejected</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Title and Filter Section -->
+
+            <br/>
+
+            <!-- Main Data Table Section -->
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Filler Space -->
+                    <div class="col-5"></div>
+                    <!-- Redemption Title -->
+                    <div class="col-3 text-center">
+                        <h4>Redemption Details</h4>
+                    </div>
+                    <!-- Review Title -->
+                    <div class="col-2 text-center">
+                        <h4>Review Details</h4>
+                    </div>
+                    <!-- Filler Space -->
+                    <div class="col-1"></div>
+                </div>
+                <!-- Title Row -->
+                <div class="row">
+                    <!-- Filler Space -->
+                    <div class="col-1 text-center"></div>
+                    <!-- Empty Space for the View-Details Button -->
+                    <div class="col-1 text-center"></div>
+                    <!-- Approval Status, View-only -->
+                    <div class="col-1 text-center">
+                        <h6>Approval Status</h6>
+                    </div>
+                    <!-- Member ID -->
+                    <div class="col-1 text-center">
+                        <h6>Member ID</h6>
+                    </div>
+                    <!-- Member Code -->
+                    <div class="col-1 text-center">
+                        <h6>Member Code</h6>
+                    </div>
+                    <!-- Member Name -->
+                    <div class="col-1 text-center">
+                        <h6>Member Name</h6>
+                    </div>
+                    <!-- Redemption Date -->
+                    <div class="col-1 text-center">
+                        <h6>Date</h6>
+                    </div>
+                    <!-- Reviewer Contact -->
+                    <div class="col-1 text-center">
+                        <h6>Contact No.</h6>
+                    </div>
+                    <!-- Reviewer Email -->
+                    <div class="col-1 text-center">
+                        <h6>E-mail</h6>
+                    </div>
+                    <!-- Review Submission Date -->
+                    <div class="col-1 text-center">
+                        <h6>Submission Date</h6>
+                    </div>
+                    <!-- Photo Status -->
+                    <div class="col-1 text-center">
+                        <h6>Photo</h6>
+                    </div>
+                    <!-- Filler Space -->
+                    <div class="col-1"></div>
+                </div>
+
+                <!-- Data Row -->
+                <div class="row" v-for="review in reviewList">
+                    <!-- Filler Space -->
+                    <div class="col-1"></div>
+                    <!-- Empty Space for the View-Details Button -->
+                    <div class="col-1">
+                        <button type="button" @click="openResponseTab(review.id)">View more Details</button>
+                    </div>
+                    <!-- Approval Status, View-only -->
+                    <div class="col-1">
+                        <h6>{{this.approvalTableDisp[review.approveRejectStatus]}}</h6>
+                    </div>
+                    <!-- Member ID -->
+                    <div class="col-1">
+                        <h6>{{review.memberId}}</h6>
+                    </div>
+                    <!-- Member Code -->
+                    <div class="col-1">
+                        <h6>{{review.memberCode}}</h6>
+                    </div>
+                    <!-- Member Name -->
+                    <div class="col-1">
+                        <h6>{{review.memberName}}</h6>
+                    </div>
+                    <!-- Redemption Date -->
+                    <div class="col-1">
+                        <h6>{{this.formatDate(review.ordDate)}}</h6>
+                    </div>
+                    <!-- Reviewer Contact -->
+                    <div class="col-1">
+                        <h6>{{review.ordTel}}</h6>
+                    </div>
+                    <!-- Reviewer Email -->
+                    <div class="col-1">
+                        <h6>{{review.ordEmail}}</h6>
+                    </div>
+                    <!-- Review Submission Date -->
+                    <div class="col-1">
+                        <h6>Submission Date</h6>
+                    </div>
+                    <!-- Photo Status -->
+                    <div class="col-1">
+                        <h6>Photo</h6>
+                    </div>
+                    <!-- Filler Space -->
+                    <div class="col-1"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const dateFormat = {year: 'numeric', month: 'long', day: 'numeric'}
+
+    const reviewListURL = "https://alpha.returnlegacy.com/rlportalapi/api/campaign/moxi/reviews"
+    // Format: "https://alpha.../reviews/" + "status/" + { approval num } + "batch/" + { batch num }
+    const customerResponseURL = "https://alpha.returnlegacy.com/rlportalapi/api/campaign/moxi/review/id/"
+
+    mainApp = Vue.createApp({
+        data() {
+            return {
+                // Date formatting variable
+                
+
+                // Filter Display Variables
+                dateDispFilter: "Filter by Redemption Date",
+                dateList: ["All", "15th May", "22nd May", "29th May"],
+                approvalDispFilter: "Filter by Approval Status",
+                approvalList: ["All", "Approved", "Pending", "Rejected"],
+
+                // Filter POPULATE Variables
+                approvalPopFilter: 0,
+                dispPopFilter: 0,
+
+                approvalTableDisp: ["Pending", "Approved", "Rejected"],
+
+                // Review List and Data Variables
+                reviewList: [],
+            }
+        },
+        methods: {
+            formatDate(inputDate) {
+                const dateObj = new Date(inputDate)
+                return dateObj.toLocaleDateString('en-US', dateFormat)
+            },
+            populateTable: async function() {
+                await axios.get(`${reviewListURL}/status/${this.approvalPopFilter}/batch/${this.dispPopFilter}`)
+                .then (res => {
+                    this.reviewList = res.data
+                    console.log(this.reviewList)
+                })
+            },
+            updateApprovalFilter: function(approveStatus) {
+                this.approvalDispFilter = this.approvalList[approveStatus]
+                this.approvalPopFilter = approveStatus
+                this.populateTable()
+            },
+            updateDateFilter: function(batchStatus) {
+                this.dateDispFilter = this.dateList[batchStatus]
+                this.dispPopFilter = batchStatus
+                this.populateTable()
+            },
+            openResponseTab: function(ID) {
+                var reviewTab = window.open(`Review.html?ID=${ID}`)
+            },
+        },
+        mounted() {
+
+            this.populateTable()
+        }
+    })
+
+    mainApp.mount("#mainApp")
+</script>

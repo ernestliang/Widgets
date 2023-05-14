@@ -67,7 +67,7 @@ export default {
             </div>
             <div v-show="showUI">
                 <div class="row align-items-center pb-5">
-                    <div class="col text-center" style="max-height: 20%; max-width: 100%;">
+                    <div class="col text-left" style="max-height: 20%; max-width: 100%;">
                         <app-header title="Member MBB Detail Maintainence Widget"></app-header>                
                         <!-- <h2>Member MBB Detail Maintainence Widget</h2> -->
                     </div>
@@ -91,15 +91,29 @@ export default {
                 </div>
                 <!-- Customer Name Display (Read-only) -->
                 <div class="row">
-                    <div class="col text-left">
+                    <div class="col-8 text-left">
                         <label for="nameDisp" class="form-label">Customer Name:</label>
                         <input type="text" class="form-control" id="nameDisp" v-model="memberData.name" readonly disabled>
+                    </div>
+                </div>
+                <!-- Customer Company Name Display (Read-only) -->
+                <div class="row">
+                    <div class="col text-left">
+                        <label for="compNameDisp" class="form-label">Customer Company Name:</label>
+                        <div class="row">
+                            <div class="col-8 text-left">
+                                <input type="text" class="form-control" id="compNameDisp" v-model="memberData.companyName" readonly disabled>
+                            </div>
+                            <div class="col-4 text-left">
+                                <app-checkBox :is-company="companyCheck"></app-checkBox>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr/>
                 <!-- Maybank Code Display -->
                 <div class="row align-items-center mt-3">
-                    <div class="col">
+                    <div class="col-8">
                         <label for="mbbCodeField" class="form-label">Customer MBB Code:</label>
                         <input type="text" class="form-control" id="mbbCodeField" v-model="memberData.mbbCode">
                         <h6 style="color:red;" > {{errorMessageCode}} </h6>
@@ -159,6 +173,7 @@ export default {
                 showSpecial: true,
                 updateSuccess: false,
                 updateStatus: "",
+                companyCheck: false,
             }
         },
         methods: {
@@ -171,7 +186,7 @@ export default {
             selectUser: async function() {
                 this.updateSuccess = false
                 this.isLoading = true
-                await axios.get(`${apiDevURL}/api/testing/member/code/${this.memberCode}`)
+                await axios.get(`${apiDevURL}/api/legacy/member/code/${this.memberCode}`)
                     .then(res => {
                         debugger;
                         if (res.data == null) {
@@ -183,6 +198,13 @@ export default {
                             // alert(JSON.stringify(res.data))
                             this.memberData = res.data
                             this.errorMessage = ""
+                            console.log(this.memberData.isCompany)
+                            if (this.memberData.isCompany == 1) {
+                                this.companyCheck = true
+                            }
+                            else {
+                                this.companyCheck = false
+                            }
                         }
                     })
                     .catch(err => {
@@ -242,6 +264,35 @@ export default {
         `,
         created() {
         }
+    })
+
+    app.component("appCheckbox", {
+        name: 'app-checkbox',
+        props: {
+            isCompany: {
+                type: Boolean,
+                default: false
+            }
+        },
+        template:`
+            <div class="container">
+                <div class="row">
+                    <div class="col-4 d-grid justify-content-center">
+                        <h6>Is Company?:</h6>
+                    </div>
+                    <div class="col-8 text-left d-grid justify-content-center">
+                        <div class="d-block">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" v-bind:checked="isCompany" value="" id="isCompanyCheck">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `,
+        methods: {
+
+        },
     })
 
     app.mount('#app')

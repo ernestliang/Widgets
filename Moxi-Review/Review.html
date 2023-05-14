@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/vue@3.3.2"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+  integrity="sha384-5L2r0SMLQHeGdO/5Ex3EfNMT4bgzU7h+qZ0lKjUq5WhmX6zIucWcgfho/+mN/y1d"
+  crossorigin="anonymous">
+        <style>
+            /* Green color for approve button */
+            .approve-label.active {
+                background-color: #28a745;
+                color: #fff;
+            }
+
+            /* Red color for reject button */
+            .reject-label.active {
+                background-color: #dc3545;
+                color: #fff;
+            }
+
+            /* Grey color for set to pending button */
+            .pending-label.active {
+                background-color: #6c757d;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="mainApp" class="container-fluid p-3">
+            <div class="container-fluid">
+                <br/>
+                <!-- Reviewer Data -->
+                <div class="row">
+                    <div class="col-12 text-left">
+                        <h3 class="text-decoration-underline">Reviewer Info:</h3>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-6 text-left">
+                                    <h5>Name:</h5>
+                                    <h6>{{this.customerData.memberName}}</h6>
+                                </div>
+                                <div class="col-6 text-left">
+                                    <h5>Member Code:</h5>
+                                    <h6>{{this.customerData.memberCode}}</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 text-left">
+                                    <h5>Name:</h5>
+                                    <h6>{{this.customerData.memberName}}</h6>
+                                </div>
+                                <div class="col-6 text-left">
+                                    <h5>Member Code:</h5>
+                                    <h6>{{this.customerData.memberCode}}</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 text-left">
+                                    <h5>Name:</h5>
+                                    <h6>{{this.customerData.memberName}}</h6>
+                                </div>
+                                <div class="col-6 text-left">
+                                    <h5>Member Code:</h5>
+                                    <h6>{{this.customerData.memberCode}}</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 text-left">
+                                    <h5>Name:</h5>
+                                    <h6>{{this.customerData.memberName}}</h6>
+                                </div>
+                                <div class="col-6 text-left">
+                                    <h5>Member Code:</h5>
+                                    <h6>{{this.customerData.memberCode}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <spacing></spacing>
+                <!-- Picture Section -->
+                <div class="row">
+                    <!-- Before-picture -->
+                    <div class="col-5">
+                        <h4>Sample picture <b><i>BEFORE</i></b> applying product:</h4>
+                        <img src="">
+                    </div>
+                    <!-- After-picture -->
+                    <div class="col-5">
+                        <h4>7 days <b><i>AFTER</i></b> applying product:</h4>
+                        <img src="">
+                    </div>
+                    <!-- Empty filler space-->
+                    <div class="col-2"></div>
+                </div>
+                <spacing></spacing>
+
+                <!-- Accordion for the Survey Response -->
+                <div class="accordion" id="answerAccordion">
+                    <!-- Section A Questions -->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="sectionAHeader">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseA" aria-expanded="true" aria-controls="collapseA">
+                                <!-- Section A Response -->
+                                Section A Response
+                            </button>
+                        </h3>
+
+                        <div id="collapseA" class="accordion-collapse collapse show" aria-labelledby="sectionAHeader" data-bs-parent="#answerAccordion">
+                            <div class="accordion-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-6 text-left">
+                                            <ul>
+                                                <li v-for=" "><sectionA-line :dataSet="customerData" :index="1" :response="customerData.qa1"></sectionA-line></li>
+                                            </ul>
+                                        </div>
+                                        <!-- <div class="col-6 text-left">
+                                            <ul>
+                                                <li v-for >
+
+                                                </li>
+                                            </ul>
+                                            
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section B Questions -->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="sectionBHeader">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseB" aria-expanded="false" aria-controls="collapseB">
+                                Section B Response
+                            </button>
+                        </h3>
+                        <div id="collapseB" class="accordion-collapse collapse" aria-labelledby="sectionBHeader" data-bs-parent="#answerAccordion">
+                            <div class="accordion-body">
+                                <strong>This is the second item's accordion body.</strong>
+                                <ul>
+                                    <li></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Additional Benefits Response -->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="sectionCHeader">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseC" aria-expanded="false" aria-controls="collapseC">
+                                Additional Benefits Record
+                            </button>
+                        </h3>
+                        <div id="collapseC" class="accordion-collapse collapse" aria-labelledby="sectionCHeader" data-bs-parent="#answerAccordion">
+                            <div class="accordion-body">
+                                <strong>{{customerData.comment1}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Misc Comments -->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="sectionDHeader">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseD" aria-expanded="false" aria-controls="collapseD">
+                                Miscellaneous Comments
+                            </button>
+                        </h3>
+                        <div id="collapseD" class="accordion-collapse collapse" aria-labelledby="sectionDHeader" data-bs-parent="#answerAccordion">
+                            <div class="accordion-body">
+                                <strong>{{customerData.comment2}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/><br/><br/>
+
+                <!-- Three-Option Slider for APPROVAL -->
+                <div class="container">
+                    <div class="btn-group">
+                        <input type="radio" @click="toggleStatus(1)" class="btn-check" name="options" id="approveStatus" autocomplete="off">
+                        <label class="btn btn-outline-primary approve-label" for="approveStatus">Approve</label>
+                    
+                        <input type="radio" @click="toggleStatus(2)" class="btn-check" name="options" id="pendingStatus" autocomplete="off" checked>
+                        <label class="btn btn-outline-primary pending-label" for="pendingStatus">Set to Pending</label>
+                    
+                        <input type="radio" @click="toggleStatus(3)" class="btn-check" name="options" id="rejectStatus" autocomplete="off">
+                        <label class="btn btn-outline-primary reject-label" for="rejectStatus">Reject</label>
+                    </div>
+                </div>
+
+                <br/><br/><br/>
+            </div>
+        </div>
+    </body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Variables to control and extract the ID from the URL
+    const customerResponseURL = "https://alpha.returnlegacy.com/rlportalapi/api/campaign/moxi/review/id/"
+    const currentURL = location.href
+    const customerID = parseInt(currentURL.split("=")[1])
+
+    var mainApp = Vue.createApp({
+        data() {
+            return {
+                customerData : {}
+            }   
+        },
+        methods: {
+            extractData: async function() {
+                await axios.get(`${customerResponseURL}${customerID}`)
+                .then (res => {
+                    this.customerData = res.data[0]
+                })
+            },
+            toggleStatus: async function(status_index) {
+                this.customerData.approveRejectStatus = status_index
+                await axios.get(``)
+                .then (res => {
+                    // 
+                })
+                // this.extractData()
+            },
+        },
+        mounted() {
+            this.extractData()
+        }
+    });
+
+    mainApp.component("sectionALine", {
+        name: "sectionA-Line",
+        data() {
+            return {
+                responseGrade: ["Same as before", "Slight improvement", "Large improvement"],
+            }
+        },
+        props: {
+            dataSet: {type: Object, default: () => ({})},
+            index: {type: Number, default: 0},
+            response: {type: Number, default: 0}
+
+        },
+        template: `
+            <h4>Question {{index}}:</h4>
+            <h5>{{responseGrade?.[response]}}</h5>
+        `,
+        computed: {
+            // findResponse: function() {
+            //     return dataSet[this.]
+            // }   
+        }
+    })
+
+    mainApp.component("sectionBLine", {
+        name: "sectionB-line",
+        data() {
+            return {
+
+            }
+        },
+        props: {
+
+        },
+        template: `
+            <h5>{{}}</h5>
+            <h6>{{}}</h6>
+        `,
+        computed: {
+
+        }
+    })
+
+    mainApp.component("spacing", {
+        name: "spacing",
+        template:`
+            <br/><hr/><br/>
+        `,
+        mounted() {           
+        }
+    });
+
+    // mainApp.component("responseList", {
+    //     name: "response-list",
+    //     props: {
+    //         seq: {type: Number, default: 1},
+    //         ans: {type: Number, default: 0}
+    //     },
+    //     methods: {
+    //         alertMe: function() {
+    //             alert("Component mounted")
+    //         }
+    //     },
+    //     computed: {
+    //         question() {
+    //             switch(this.seq) {
+    //                 case 1:
+    //                     return "question 1"
+    //                 case 2:
+    //                     return "question 2"
+    //                 default:
+    //                     return null
+    //             }
+    //         },
+    //         answer() {
+    //             switch(this.ans) {
+    //                 case 0:
+    //                     return "Same as before"
+    //                 case 1:
+    //                     return "Slightly better"
+    //                 case 2:
+    //                     return "Much better"
+    //             }
+    //         }
+    //     },
+    //     template:`
+    //         <h6>{{question}} --- {{answer}}</h6>
+    //     `,
+    //     mounted() {
+    //         // alert('aaa')
+    //         // this.alertMe()
+    //     }
+    // })
+
+    mainApp.mount("#mainApp")
+</script>

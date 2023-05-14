@@ -7,6 +7,13 @@
     </head>
     <body class="p-3">
         <div id="mainApp" class="container-fluid p-5">
+
+            <!-- <app-navbar :title="navbarTitle" @emit-search="receiveEmit" :show="showBar"></app-navbar>
+            <button type="button" class="btn btn-primary" @click="changeNavTitle"></button>
+            <button type="button" class="btn btn-primary" @click="toggleBar">Toggle Bar</button> -->
+
+            <app-card @change-card="changeChildCard" :my-title="parentCardTitle"></app-card>
+
             <!-- Main Title Row with the title and dropdown -->
             <div class="row">
                 <div class="col-8">
@@ -130,6 +137,11 @@
     const mainApp = Vue.createApp({
         data() {
             return {
+                navbarTitle: "Navbar title from the Main",
+                showBar: true,
+                parentCardTitle: "Original Card TItle",
+
+
                 // The STATUS of the order you wish to retrieve
                 // Default is ALL (-1); Approved is (0), and Pending is (1)
                 filterStatus: -1,
@@ -142,10 +154,24 @@
                 reviewResponse: {},
 
                 filterList: ["All", "Pending", "Approved"],
-                selectedFilter: "All"
+                selectedFilter: "All",
             }
         },
         methods: {
+            changeChildCard: function() {
+                alert("Emit reached main")
+                this.parentCardTitle = "Replaced Card Title from parent"
+            },
+            changeNavTitle: function() {
+                this.navbarTitle = "Changed from the Main"
+            },
+            receiveEmit: function(inputMsg) {
+                alert(`Received from child: ${inputMsg}`)
+            },
+            toggleBar: function() {
+                this.showBar = !this.showBar
+            },
+
             // Function to populate the table
             // Will be called in various places throughout the code as necessary
             populateTable: async function() {
@@ -191,7 +217,9 @@
             }
         },
         mounted() {
-            this.populateTable();
+            // this.populateTable();
+            // alert("Mount trigger parent")
+            
         }
     })
 
@@ -228,6 +256,78 @@
             
         }
     }
+
+    mainApp.component("appNavbar", {
+        name: "app-navbar",
+        data(){
+            return {
+                // visible:true,
+                inputTxt: "",
+            }
+        },
+        props: {
+            title: "",
+            show: {
+                type: Boolean,
+                default: true
+            },
+        },
+        emits: ['emitSearch'],
+        methods: {
+            searchClick : function() {
+                this.$emit('emitSearch', this.inputTxt)
+            },
+            hideMe: function() {
+                this.visible = !this.visible
+            },
+        },
+         template:`
+        <button class="btn btn-outline-success" @click="hideMe" disabled>Hide</button>
+        <nav class="navbar navbar-light bg-light" v-if="show">
+            <div class="container-fluid">
+                <a class="navbar-brand">{{title}}</a>
+                <div class="d-flex">
+                    <input class="form-control me-2" v-model="inputTxt" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" @click="searchClick">Search</button>
+                </div>
+            </div>
+        </nav>
+        `,
+        mounted() {
+            this.$emit('emitSearch')
+        }
+    }) 
+    
+    mainApp.component("appCard", {
+        name: "app-card",
+        data(){
+            return {
+
+            }
+        },
+        props: {
+            myTitle: {
+                type: String,
+                default: ""
+            }
+        },
+        methods: {
+            changeMe2: function() {
+                alert("changeMe2 triggered")
+                this.$emit('changeCard')
+            }
+        },
+        emit: ['changeCard'],
+        template:`
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ myTitle }}</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <button type="button" class="btn btn-secondary" @click="changeMe2">Click Me</button>
+            </div>
+        </div>
+        `
+    })
 
     mainApp.mount('#mainApp')
 </script>
