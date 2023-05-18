@@ -13,15 +13,16 @@
     </head>
     <body>
         <div id="mainApp" class="container-fluid p-3">
-            <!-- Title and Filter Section -->
-            <div class="container-fluid">
+            
+            <div class="container-fluid table table-bordered table-hover">
+                <!-- Title and Filter Section -->
                 <div class="row">
                     <div class="row">
-                        <div class="col-6 text-left">
+                        <div class="col-8 text-left">
                             <!-- Main Title/Logo goes here -->
                             <h2>Moxi-Review Data & Response Table</h2>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <!-- Date Filter goes here -->
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dateFilter" data-bs-toggle="dropdown">{{dateDispFilter}}</button>
@@ -33,14 +34,14 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2 text-left">
                             <!-- Approval Status Filter goes here -->
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="statusFilter" data-bs-toggle="dropdown">{{approvalDispFilter}}</button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" @click="updateApprovalFilter(0)">All</a></li>
-                                    <li><a class="dropdown-item" @click="updateApprovalFilter(1)">Approved</a></li>
-                                    <li><a class="dropdown-item" @click="updateApprovalFilter(2)">Pending</a></li>
+                                    <li><a class="dropdown-item" @click="updateApprovalFilter(2)">Approved</a></li>
+                                    <li><a class="dropdown-item" @click="updateApprovalFilter(1)">Pending</a></li>
                                     <li><a class="dropdown-item" @click="updateApprovalFilter(3)">Rejected</a></li>
                                 </ul>
                             </div>
@@ -49,20 +50,18 @@
                 </div>
             </div>
             <!-- End of Title and Filter Section -->
-
             <br/>
-
             <!-- Main Data Table Section -->
             <div class="container-fluid">
                 <div class="row">
                     <!-- Filler Space -->
-                    <div class="col-5"></div>
+                    <div class="col-4"></div>
                     <!-- Redemption Title -->
                     <div class="col-3 text-center">
                         <h4>Redemption Details</h4>
                     </div>
                     <!-- Review Title -->
-                    <div class="col-2 text-center">
+                    <div class="col-3 text-center">
                         <h4>Review Details</h4>
                     </div>
                     <!-- Filler Space -->
@@ -77,10 +76,6 @@
                     <!-- Approval Status, View-only -->
                     <div class="col-1 text-center">
                         <h6>Approval Status</h6>
-                    </div>
-                    <!-- Member ID -->
-                    <div class="col-1 text-center">
-                        <h6>Member ID</h6>
                     </div>
                     <!-- Member Code -->
                     <div class="col-1 text-center">
@@ -99,7 +94,7 @@
                         <h6>Contact No.</h6>
                     </div>
                     <!-- Reviewer Email -->
-                    <div class="col-1 text-center">
+                    <div class="col-2 text-center">
                         <h6>E-mail</h6>
                     </div>
                     <!-- Review Submission Date -->
@@ -115,51 +110,47 @@
                 </div>
 
                 <!-- Data Row -->
-                <div class="row" v-for="review in reviewList">
+                <div class="row mb-3" v-for="review in reviewList">
                     <!-- Filler Space -->
                     <div class="col-1"></div>
                     <!-- Empty Space for the View-Details Button -->
                     <div class="col-1">
-                        <button type="button" @click="openResponseTab(review.id)">View more Details</button>
+                       <button type="button" @click="openResponseTab(review.id)">View more Details</button>
                     </div>
                     <!-- Approval Status, View-only -->
-                    <div class="col-1">
+                    <div class="col-1 text-center">
                         <h6>{{this.approvalTableDisp[review.approveRejectStatus]}}</h6>
                     </div>
-                    <!-- Member ID -->
-                    <div class="col-1">
-                        <h6>{{review.memberId}}</h6>
-                    </div>
                     <!-- Member Code -->
-                    <div class="col-1">
+                    <div class="col-1 text-center">
                         <h6>{{review.memberCode}}</h6>
                     </div>
                     <!-- Member Name -->
-                    <div class="col-1">
+                    <div class="col-1 text-center">
                         <h6>{{review.memberName}}</h6>
                     </div>
                     <!-- Redemption Date -->
-                    <div class="col-1">
-                        <h6>{{this.formatDate(review.ordDate)}}</h6>
+                    <div class="col-1 text-center">
+                        <h6>{{formatRedeemDate(review.ordDate)}}</h6>
                     </div>
                     <!-- Reviewer Contact -->
-                    <div class="col-1">
-                        <h6>{{review.ordTel}}</h6>
+                    <div class="col-1 text-center">
+                        <h6 style="word-wrap: break-word">{{review.ordTel}}</h6>
                     </div>
                     <!-- Reviewer Email -->
-                    <div class="col-1">
-                        <h6>{{review.ordEmail}}</h6>
+                    <div class="col-2 text-center">
+                        <h6 style="word-wrap:break-word" class="text-wrap">{{review.ordEmail}}</h6>
                     </div>
                     <!-- Review Submission Date -->
-                    <div class="col-1">
-                        <h6>Submission Date</h6>
+                    <div class="col-1 text-center">
+                        <h6>{{formatReviewDate(review.reviewDate)}}</h6>
                     </div>
                     <!-- Photo Status -->
-                    <div class="col-1">
+                    <div class="col-1 text-center">
                         <h6>Photo</h6>
                     </div>
                     <!-- Filler Space -->
-                    <div class="col-1"></div>
+                    <div class="col-1 text-center"></div>
                 </div>
             </div>
         </div>
@@ -177,7 +168,7 @@
         data() {
             return {
                 // Date formatting variable
-                
+                // formattedDate: "",
 
                 // Filter Display Variables
                 dateDispFilter: "Filter by Redemption Date",
@@ -188,6 +179,7 @@
                 // Filter POPULATE Variables
                 approvalPopFilter: 0,
                 dispPopFilter: 0,
+                countryFilter: 1,
 
                 approvalTableDisp: ["Pending", "Approved", "Rejected"],
 
@@ -196,12 +188,22 @@
             }
         },
         methods: {
-            formatDate(inputDate) {
-                const dateObj = new Date(inputDate)
-                return dateObj.toLocaleDateString('en-US', dateFormat)
+            formatRedeemDate(redeemDate) {
+                // Variables to format the date
+                const retrieveDate = new Date(redeemDate)
+                const options = {month: 'long', day: 'numeric', year : 'numeric'}
+                const formattedDate = retrieveDate.toLocaleDateString('en-US', options)
+                return formattedDate
+            },
+            formatReviewDate(reviewDate) {
+                // Variables to format the date
+                const retrieveDate = new Date(reviewDate)
+                const options = {month: 'long', day: 'numeric', year : 'numeric'}
+                const formattedDate = retrieveDate.toLocaleDateString('en-US', options)
+                return formattedDate
             },
             populateTable: async function() {
-                await axios.get(`${reviewListURL}/status/${this.approvalPopFilter}/batch/${this.dispPopFilter}`)
+                await axios.get(`${reviewListURL}/country/${this.countryFilter}/status/${(this.approvalPopFilter - 1)}/batch/${(this.dispPopFilter - 1)}`)
                 .then (res => {
                     this.reviewList = res.data
                     console.log(this.reviewList)

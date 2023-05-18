@@ -7,24 +7,12 @@
         <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.0.2/dist/css/bootstrap.min.css"
   integrity="sha384-5L2r0SMLQHeGdO/5Ex3EfNMT4bgzU7h+qZ0lKjUq5WhmX6zIucWcgfho/+mN/y1d"
   crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
         <style>
-            /* Green color for approve button */
-            .approve-label.active {
-                background-color: #28a745;
-                color: #fff;
+            .row {
+                margin-bottom: 3px;
             }
-
-            /* Red color for reject button */
-            .reject-label.active {
-                background-color: #dc3545;
-                color: #fff;
-            }
-
-            /* Grey color for set to pending button */
-            .pending-label.active {
-                background-color: #6c757d;
-                color: #fff;
-            }
+            
         </style>
     </head>
     <body>
@@ -34,66 +22,111 @@
                 <!-- Reviewer Data -->
                 <div class="row">
                     <div class="col-12 text-left">
-                        <h3 class="text-decoration-underline">Reviewer Info:</h3>
                         <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-6 text-left">
-                                    <h5>Name:</h5>
-                                    <h6>{{this.customerData.memberName}}</h6>
-                                </div>
-                                <div class="col-6 text-left">
-                                    <h5>Member Code:</h5>
-                                    <h6>{{this.customerData.memberCode}}</h6>
-                                </div>
+                            <div class="align-items-center" style="display: flex">
+                                <i class="bi bi-info-circle pb-2 fa-lg me-2"></i>
+                                <h3 class="ml-3"><b><i>Reviewer Info:</i></b></h3>
                             </div>
-                            <div class="row">
-                                <div class="col-6 text-left">
-                                    <h5>Name:</h5>
-                                    <h6>{{this.customerData.memberName}}</h6>
-                                </div>
-                                <div class="col-6 text-left">
-                                    <h5>Member Code:</h5>
-                                    <h6>{{this.customerData.memberCode}}</h6>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 text-left">
-                                    <h5>Name:</h5>
-                                    <h6>{{this.customerData.memberName}}</h6>
-                                </div>
-                                <div class="col-6 text-left">
-                                    <h5>Member Code:</h5>
-                                    <h6>{{this.customerData.memberCode}}</h6>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 text-left">
-                                    <h5>Name:</h5>
-                                    <h6>{{this.customerData.memberName}}</h6>
-                                </div>
-                                <div class="col-6 text-left">
-                                    <h5>Member Code:</h5>
-                                    <h6>{{this.customerData.memberCode}}</h6>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5><i>Name:</i></h5>
+                                            <input class="form-control" type="text" :placeholder="customerData.memberName" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{this.customerData.memberName}}</h6> -->
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5><i>Member Code:</i></h5>
+                                            <input class="form-control" type="text" :placeholder="customerData.memberCode" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{this.customerData.memberCode}}</h6> -->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5><i>Contact No.:</i></h5>
+                                            <input class="form-control" type="text" :placeholder="customerData.ordTellNo" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{this.customerData.ordTellNo}}</h6> -->
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5><i>Email Address:</i></h5>
+                                            <input class="form-control" type="text" :placeholder="customerData.ordEmail" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{this.customerData.ordEmail}}</h6> -->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5><i>Age Range:</i></h5>
+                                            <input class="form-control" type="text" :placeholder="customerAge" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{customerAge}}</h6> -->
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5><i>Gender:</i></h5>
+                                            <input class="form-control" type="text" :placeholder="customerGender" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{customerGender}}</h6> -->
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5><i>State of Residence:</i></h5>
+                                            <input class="form-control" type="text" :placeholder="customerState" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{customerState}}</h6> -->
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5><i>Review Date:</i></h5>
+                                            <input class="form-control" type="text" :placeholder="formattedDate" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{formattedDate}}</h6> -->
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12 text-left">
+                                            <h5><i>Delivery Address:</i></h5>
+                                            <input class="form-control mb-2" type="text" :placeholder="deliveryAddress" style="opacity: 1.0" disabled>
+                                            <input class="form-control" type="text" :placeholder="deliveryAddressCont" v-bind:visible="notSelfC" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{deliveryAddress}}</h6>
+                                            <h6 :v-if="notSelfC">{{deliveryAddressCont}}</h6> -->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col text-left">
+                                            <h5><i>Manual Product Review:</i></h5>
+                                            <h6>{{this.customerData.review}}</h6>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <spacing></spacing>
+
                 <!-- Picture Section -->
-                <div class="row">
-                    <!-- Before-picture -->
-                    <div class="col-5">
-                        <h4>Sample picture <b><i>BEFORE</i></b> applying product:</h4>
-                        <img src="">
+                <div class="container-fluid">
+                    <div class="align-items-center" style="display: flex">
+                        <i class="bi bi-file-earmark-image pb-2 fa-lg me-2"></i>
+                        <h3 class="ml-3"><b><i>Attached Pictures:</i></b></h3>
                     </div>
-                    <!-- After-picture -->
-                    <div class="col-5">
-                        <h4>7 days <b><i>AFTER</i></b> applying product:</h4>
-                        <img src="">
+                    <div class="row">
+                        <!-- Before-picture -->
+                        <div class="col-12 col-md-5 col-lg-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Sample picture <b><i>BEFORE</i></b> applying product:</h4>
+                                    <img :src="customerData.img1" style="width:200px; height:200px" class="align-items-center" alt="No picture submitted">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Before-picture -->
+                        <div class="col-12 col-md-5 col-lg-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">7 days <b><i>AFTER</i></b> applying product:</h4>
+                                    <img :src="customerData.img2" style="width:200px; height:200px" alt="No picture submitted">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Empty filler space-->
+                        <div class="col-2"></div>
                     </div>
-                    <!-- Empty filler space-->
-                    <div class="col-2"></div>
                 </div>
                 <spacing></spacing>
 
@@ -107,24 +140,19 @@
                                 Section A Response
                             </button>
                         </h3>
-
-                        <div id="collapseA" class="accordion-collapse collapse show" aria-labelledby="sectionAHeader" data-bs-parent="#answerAccordion">
+                        <div id="collapseA" class="accordion-collapse collapse" aria-labelledby="sectionAHeader" data-bs-parent="#answerAccordion">
                             <div class="accordion-body">
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-6 text-left">
+                                        <h5><b>Customer Skin Type:</b> ( {{customerSkinType}} )</h5>
+                                        <h5>List of reactions: </h5>
+                                        <div class="col text-left">
                                             <ul>
-                                                <li v-for=" "><sectionA-line :dataSet="customerData" :index="1" :response="customerData.qa1"></sectionA-line></li>
-                                            </ul>
-                                        </div>
-                                        <!-- <div class="col-6 text-left">
-                                            <ul>
-                                                <li v-for >
-
+                                                <li v-for="(response, idex) in customerData.qaSet">
+                                                    <section-a-line :index="idex" :ans="response"></section-a-line>
                                                 </li>
                                             </ul>
-                                            
-                                        </div> -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -139,10 +167,18 @@
                         </h3>
                         <div id="collapseB" class="accordion-collapse collapse" aria-labelledby="sectionBHeader" data-bs-parent="#answerAccordion">
                             <div class="accordion-body">
-                                <strong>This is the second item's accordion body.</strong>
-                                <ul>
-                                    <li></li>
-                                </ul>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col text-left">
+                                            <ul>
+                                                <li v-for="(ans, idex) in customerData.qaSet">
+                                                    <!-- <sectionB-line :dataSet="customerData.qaSet[idex]" :index="(idex + 1)" :response="customerData.qaSet[idex]"></sectionB-line> -->
+                                                    <section-b-line :sequence="idex" :answer="ans"></section-b-line>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -155,7 +191,8 @@
                         </h3>
                         <div id="collapseC" class="accordion-collapse collapse" aria-labelledby="sectionCHeader" data-bs-parent="#answerAccordion">
                             <div class="accordion-body">
-                                <strong>{{customerData.comment1}}</strong>
+                                <h5><u><i>Did the product provide any additional benefits other than the mentioned benefits?</i></u></h5>
+                                <h6 style="word-wrap: break-word">{{customerData.comment1}}</h6>
                             </div>
                         </div>
                     </div>
@@ -168,24 +205,30 @@
                         </h3>
                         <div id="collapseD" class="accordion-collapse collapse" aria-labelledby="sectionDHeader" data-bs-parent="#answerAccordion">
                             <div class="accordion-body">
-                                <strong>{{customerData.comment2}}</strong>
+                                <h5><u><i>Do you have any other comments to add on?</i></u></h5>
+                                <h6 style="word-wrap: break-word">{{customerData.comment2}}</h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                <br/><br/><br/>
+                <spacing></spacing>
 
                 <!-- Three-Option Slider for APPROVAL -->
-                <div class="container">
-                    <div class="btn-group">
-                        <input type="radio" @click="toggleStatus(1)" class="btn-check" name="options" id="approveStatus" autocomplete="off">
-                        <label class="btn btn-outline-primary approve-label" for="approveStatus">Approve</label>
-                    
-                        <input type="radio" @click="toggleStatus(2)" class="btn-check" name="options" id="pendingStatus" autocomplete="off" checked>
-                        <label class="btn btn-outline-primary pending-label" for="pendingStatus">Set to Pending</label>
-                    
-                        <input type="radio" @click="toggleStatus(3)" class="btn-check" name="options" id="rejectStatus" autocomplete="off">
-                        <label class="btn btn-outline-primary reject-label" for="rejectStatus">Reject</label>
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Confirm Approval Status:</h5>
+                            <div class="btn-group">
+                                <input type="radio" @click="toggleStatus(1)" v-bind:checked="approveChecked" class="btn-check" name="options" id="approveStatus" autocomplete="off">
+                                <label class="btn btn-outline-success" for="approveStatus">Approve</label>
+                            
+                                <input type="radio" @click="toggleStatus(2)" v-bind:checked="pendingChecked" class="btn-check" name="options" id="pendingStatus" autocomplete="off" checked>
+                                <label class="btn btn-outline-secondary" for="pendingStatus">Set to Pending</label>
+                            
+                                <input type="radio" @click="toggleStatus(3)" v-bind:checked="rejectChecked" class="btn-check" name="options" id="rejectStatus" autocomplete="off">
+                                <label class="btn btn-outline-danger" for="rejectStatus">Reject</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -204,7 +247,22 @@
     var mainApp = Vue.createApp({
         data() {
             return {
-                customerData : {}
+                customerData : {},
+                customerAge: "",
+                customerGender: "",
+                customerSkinType: "",
+                customerState: "",
+                ageRangeList: ["19 and below / 以下", "20 - 29", "30 - 39", "40 - 49", "50 and above / 以上"],
+                genderList: ["Male", "Female"],
+                skinTypeList: ["Normal / 中性", "Oily / 油性", "Dry / 干性", "A Combination of the above / 混合", "Sensitive / 敏感"],
+                stateList: ["Johor", "Kedah", "Kelantan", "Kuala Lumpur", "Labuan", "Melaka", "Negeri Sembilan", "Pahang", "Perak", "Perlis", "Pulau Pinang", "Putrajaya", "Sabah", "Sarawak", "Selangor", "Terengganu"],
+                formattedDate: "",
+                approvedChecked: false,
+                pendingChecked: false,
+                rejectChecked: false,
+                deliveryAddress: "",
+                deliveryAddressCont: "",
+                notSelfC: false,
             }   
         },
         methods: {
@@ -213,7 +271,40 @@
                 .then (res => {
                     this.customerData = res.data[0]
                 })
+                this.customerAge = this.ageRangeList[this.customerData.age]
+                this.customerGender = this.genderList[this.customerData.gender]
+                this.customerSkinType = this.skinTypeList[this.customerData.skinType]
+                this.customerState = this.stateList[this.customerData.stateId]
+
+                // Variables to format the date
+                const retrieveDate = new Date(this.customerData.reviewDate)
+                const options = {month: 'long', day: 'numeric', year : 'numeric'}
+                this.formattedDate = retrieveDate.toLocaleDateString('en-US', options)
+
+                switch(this.customerData.approveRejectStatus) {
+                    case 0:
+                        this.pendingChecked = true
+                        break;
+                    case 1:
+                        this.approveChecked = true
+                        break;
+                    case 2:
+                        this.rejectChecked = true
+                        break;
+                }
+                switch(this.customerData.deliveryType) {
+                    case 2:
+                        this.deliveryAddress = "SELF-COLLECT"
+                        this.notSelfC = false
+                        break;
+                    default:
+                        this.deliveryAddress = this.customerData.delAddress1
+                        this.deliveryAddressCont = this.customerData.delAddress2
+                        this.notSelfC = true
+                        break;
+                }
             },
+
             toggleStatus: async function(status_index) {
                 this.customerData.approveRejectStatus = status_index
                 await axios.get(``)
@@ -222,6 +313,7 @@
                 })
                 // this.extractData()
             },
+
         },
         mounted() {
             this.extractData()
@@ -229,46 +321,60 @@
     });
 
     mainApp.component("sectionALine", {
-        name: "sectionA-Line",
+        name: "section-a-Line",
         data() {
             return {
-                responseGrade: ["Same as before", "Slight improvement", "Large improvement"],
+                conditionList: ["I have Dull Skin", "I have an Uneven Skin Tone", "I have Dark Spots on my Face", "I have Freckles", "I have Blemishes on my Skin", "I have Dehydrated Skin", "I have an Uneven Skin Texture", "I have Acne-Prone Skin", "I have a Fine-Lines problem", "I have a Redness and/or Sensitivity issue"],
             }
         },
         props: {
-            dataSet: {type: Object, default: () => ({})},
             index: {type: Number, default: 0},
-            response: {type: Number, default: 0}
-
+            ans: {type: Number, default: 0},
         },
-        template: `
-            <h4>Question {{index}}:</h4>
-            <h5>{{responseGrade?.[response]}}</h5>
+        template:`
+            <div class="d-flex align-items-center gap-2">
+                <div class="d-flex justify-content-start align-items-center mr-2">
+                    <div>
+                        <h6>{{this.conditionList?.[this.index]}}</h6>
+                    </div>
+                </div>
+                <div class="text-left">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" v-bind:checked="hasCondition" value="" id="isCompanyCheck" style="opacity: 1.0" disabled>
+                    </div>
+                </div>
+            </div>
         `,
         computed: {
-            // findResponse: function() {
-            //     return dataSet[this.]
-            // }   
+            hasCondition: function() {
+                switch (this.ans) {
+                    case 0:
+                        return false
+                        break;
+                    case 1:
+                        return true
+                        break;
+                }
+            },
         }
     })
 
     mainApp.component("sectionBLine", {
-        name: "sectionB-line",
+        name: "section-b-line",
         data() {
             return {
-
+                responseGrade: ["Same as before", "Slight improvement", "Large improvement"],
+                questionArray: ["Skin Radiance", "Skin Fairness", "Skin Pigmentation", "Skin Tone-Evenness", "Skin Tone Evenness", "Skin Smoothness", "Skin Hydration", "Skin Open-Pores Issues", "Skin Impurities Issues (eg. Blackheads)", "Skin Fine Line", "Acne/Pimple Issues", "Skin Redness"]
             }
         },
         props: {
-
+            sequence: { type: Number, required: true },
+            answer: { type: Number, required: true }
         },
-        template: `
-            <h5>{{}}</h5>
-            <h6>{{}}</h6>
+        template:`
+            <h5>Question {{ sequence + 1 }} : {{ questionArray?.[sequence] }}</h5>
+            <h6>{{ responseGrade?.[answer] }} </h6>
         `,
-        computed: {
-
-        }
     })
 
     mainApp.component("spacing", {
