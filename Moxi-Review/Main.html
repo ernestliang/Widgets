@@ -2,25 +2,47 @@
 <html>
     <head>
         <script src="https://unpkg.com/vue@3.0.2"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+        <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/lumen/bootstrap.min.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet"  />
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <link href=" https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css " rel="stylesheet">
         <style>
-            	/* Style to give borders to the rows and col */
-                .diy_border {
-                    border: 3px solid black;
-                }
+            body {
+                background-color: #f4e3ff;
+            }
+            .spinner-wrapper {
+                background-color: black;
+                opacity: 50%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .spinner-border {
+                height: 60px;
+                width: 60px;
+            }
         </style>
     </head>
     <body>
-        <div id="mainApp" class="container-fluid p-3">
-            
+        <div id="mainApp" class="container p-4">
+            <div class="spinner-wrapper" v-show="isDisplaying">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
             <div class="container-fluid table table-bordered table-hover">
                 <!-- Title and Filter Section -->
                 <div class="row">
                     <div class="row">
                         <div class="col-8 text-left">
                             <!-- Main Title/Logo goes here -->
-                            <h2>Moxi-Review Data & Response Table</h2>
+                            <h2>Moxi-Review Data</h2>
                         </div>
                         <div class="col-2">
                             <!-- Date Filter goes here -->
@@ -52,111 +74,122 @@
             <!-- End of Title and Filter Section -->
             <br/>
             <!-- Main Data Table Section -->
-            <div class="container-fluid">
-                <div class="row">
+            <table class="table" border="2">
+                <!-- Title Section 1 -->
+                <tr>
                     <!-- Filler Space -->
-                    <div class="col-4"></div>
+                    <th colspan="4" scope="col"></th>
                     <!-- Redemption Title -->
-                    <div class="col-3 text-center">
-                        <h4>Redemption Details</h4>
-                    </div>
+                    <th class="text-center table-active" colspan="3" scope="col">
+                        Redemption Details
+                    </th>
                     <!-- Review Title -->
-                    <div class="col-3 text-center">
-                        <h4>Review Details</h4>
-                    </div>
+                    <th class="text-center table-secondary" colspan="4" scope="col">
+                        Review Details
+                    </th>
                     <!-- Filler Space -->
-                    <div class="col-1"></div>
-                </div>
-                <!-- Title Row -->
-                <div class="row">
+                    <!-- <th colspan="1" scope="col"></th> -->
+                </tr>
+                <!--Title Section 2 -->
+                <tr class="table-dark">
                     <!-- Filler Space -->
-                    <div class="col-1 text-center"></div>
+                    <th colspan="1" scope="col"></th>
                     <!-- Empty Space for the View-Details Button -->
-                    <div class="col-1 text-center"></div>
+                    <th colspan="1" scope="col"></th>
                     <!-- Approval Status, View-only -->
-                    <div class="col-1 text-center">
-                        <h6>Approval Status</h6>
-                    </div>
+                    <th colspan="1" class="text-center" scope="col">
+                        Approval Status
+                    </th>
                     <!-- Member Code -->
-                    <div class="col-1 text-center">
-                        <h6>Member Code</h6>
-                    </div>
+                    <th colspan="1" class="text-center" scope="col">
+                        Member Code
+                    </th>
                     <!-- Member Name -->
-                    <div class="col-1 text-center">
-                        <h6>Member Name</h6>
-                    </div>
+                    <th colspan="1" class="text-center" scope="col">
+                        Member Name
+                    </th>
                     <!-- Redemption Date -->
-                    <div class="col-1 text-center">
-                        <h6>Date</h6>
-                    </div>
+                    <th colspan="1" class="text-center" scope="col">
+                        Redemp Date
+                    </th>
                     <!-- Reviewer Contact -->
-                    <div class="col-1 text-center">
-                        <h6>Contact No.</h6>
-                    </div>
+                    <th colspan="1" class="text-center" scope="col">
+                        Contact No.
+                    </th>
                     <!-- Reviewer Email -->
-                    <div class="col-2 text-center">
-                        <h6>E-mail</h6>
-                    </div>
+                    <th colspan="1" class="text-center" scope="col">
+                        E-mail
+                    </th>
                     <!-- Review Submission Date -->
-                    <div class="col-1 text-center">
-                        <h6>Submission Date</h6>
-                    </div>
+                    <th colspan="1" class="text-center" scope="col">
+                        Submission Date
+                    </th>
                     <!-- Photo Status -->
-                    <div class="col-1 text-center">
-                        <h6>Photo</h6>
-                    </div>
+                    <th colspan="1" class="text-center" scope="col">
+                        Photo
+                    </th>
+                    <th colspan="1" class="text-center" scope="col">
+                        Order Number
+                    </th>
                     <!-- Filler Space -->
-                    <div class="col-1"></div>
-                </div>
+                    <td colspan="1" scope="col"></th>
+                </tr>
 
                 <!-- Data Row -->
-                <div class="row mb-3" v-for="review in reviewList">
+                <tr class="mb-3" v-for="review in reviewList">
                     <!-- Filler Space -->
-                    <div class="col-1"></div>
-                    <!-- Empty Space for the View-Details Button -->
-                    <div class="col-1">
-                       <button type="button" @click="openResponseTab(review.id)">View more Details</button>
-                    </div>
-                    <!-- Approval Status, View-only -->
-                    <div class="col-1 text-center">
-                        <h6>{{this.approvalTableDisp[review.approveRejectStatus]}}</h6>
-                    </div>
+                    <td colspan="1"></td>
+                    <!-- View-Details Button -->
+                    <td colspan="1" class="text-center">
+                        <button type="button" class="btn btn-sm" @click="openResponseTab(review.id)">
+                            <i class="bi bi-search" style="font-size: large;"></i>
+                        </button>
+                    </td>
+                    <!-- Approval Status (View-Only) -->
+                    <td class="text-center" colspan="1" scope="col">
+                        {{this.approvalTableDisp[review.approveRejectStatus]}}
+                    </td>
                     <!-- Member Code -->
-                    <div class="col-1 text-center">
-                        <h6>{{review.memberCode}}</h6>
-                    </div>
+                    <td class="text-center" colspan="1" scope="col">
+                        {{review.memberCode}}
+                    </td>
                     <!-- Member Name -->
-                    <div class="col-1 text-center">
-                        <h6>{{review.memberName}}</h6>
-                    </div>
+                    <td class="text-center" colspan="1" scope="col">
+                        {{review.memberName}}
+                    </td>
                     <!-- Redemption Date -->
-                    <div class="col-1 text-center">
-                        <h6>{{formatRedeemDate(review.ordDate)}}</h6>
-                    </div>
+                    <td class="text-center" colspan="1" scope="col">
+                        {{formatRedeemDate(review.ordDate)}}
+                    </td>
                     <!-- Reviewer Contact -->
-                    <div class="col-1 text-center">
-                        <h6 style="word-wrap: break-word">{{review.ordTel}}</h6>
-                    </div>
+                    <td class="text-center" colspan="1" scope="col">
+                        <span style="word-wrap: break-word">{{review.ordTel}}</span>
+                    </td>
                     <!-- Reviewer Email -->
-                    <div class="col-2 text-center">
-                        <h6 style="word-wrap:break-word" class="text-wrap">{{review.ordEmail}}</h6>
-                    </div>
+                    <td class="text-center" colspan="1" scope="col">
+                        <span style="word-wrap:break-word" class="text-wrap">{{review.ordEmail}}</span>
+                    </td>
                     <!-- Review Submission Date -->
-                    <div class="col-1 text-center">
-                        <h6>{{formatReviewDate(review.reviewDate)}}</h6>
-                    </div>
+                    <td class="text-center" colspan="1" scope="col">
+                        <span style="word-wrap:break-word" class="text-wrap">{{formatReviewDate(review.reviewDate)}}</span>
+                    </td>
                     <!-- Photo Status -->
-                    <div class="col-1 text-center">
-                        <h6>Photo</h6>
-                    </div>
+                    <td class="text-center" colspan="1" scope="col">
+                        <img :src="checkPhoto(review)" alt="No Image Available" style="width:20px; height:20px;"/>
+                    </td>
+                    <!-- Order Number -->
+                    <td class="text-center">
+                        <span style="word-wrap:break-word" class="text-wrap">{{review.focOrderNo}}</span>
+                    </td>
                     <!-- Filler Space -->
-                    <div class="col-1 text-center"></div>
-                </div>
-            </div>
+                    <td colspan="1"></td>
+                </tr>
+            </table>
         </div>
     </body>
 </html>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js "></script>
 <script>
     const dateFormat = {year: 'numeric', month: 'long', day: 'numeric'}
 
@@ -171,10 +204,10 @@
                 // formattedDate: "",
 
                 // Filter Display Variables
-                dateDispFilter: "Filter by Redemption Date",
+                dateDispFilter: "Redemption Date",
                 dateList: ["All", "15th May", "22nd May", "29th May"],
-                approvalDispFilter: "Filter by Approval Status",
-                approvalList: ["All", "Approved", "Pending", "Rejected"],
+                approvalDispFilter: "Approval Status",
+                approvalList: ["All", "Pending", "Approved", "Rejected"],
 
                 // Filter POPULATE Variables
                 approvalPopFilter: 0,
@@ -185,6 +218,8 @@
 
                 // Review List and Data Variables
                 reviewList: [],
+
+                isDisplaying: false,
             }
         },
         methods: {
@@ -203,11 +238,32 @@
                 return formattedDate
             },
             populateTable: async function() {
+                this.isDisplaying = true
                 await axios.get(`${reviewListURL}/country/${this.countryFilter}/status/${(this.approvalPopFilter - 1)}/batch/${(this.dispPopFilter - 1)}`)
                 .then (res => {
                     this.reviewList = res.data
                     console.log(this.reviewList)
                 })
+                .catch (err => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Server/API error detected!',
+                        text: err,
+                    })
+                })
+                .finally (() => {
+                    this.isDisplaying = false
+                    console.log(this.isDisplaying)
+                })
+            },
+            checkPhoto(targetReview) {
+                debugger;
+                if (targetReview.img1 && targetReview.img2) {
+                    return "data:image/png;base64,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"
+                }
+                else {
+                    return "https://p7.hiclipart.com/preview/727/185/127/red-x-letter-computer-icons-red-x-thumbnail.jpg"
+                }
             },
             updateApprovalFilter: function(approveStatus) {
                 this.approvalDispFilter = this.approvalList[approveStatus]
@@ -220,11 +276,13 @@
                 this.populateTable()
             },
             openResponseTab: function(ID) {
-                var reviewTab = window.open(`Review.html?ID=${ID}`)
+                console.log("A is 2")
+                var reviewTab = window.open(`Review.html?ID=${ID}`, `${ID}`)
+                console.log("A is 3")
+
             },
         },
         mounted() {
-
             this.populateTable()
         }
     })

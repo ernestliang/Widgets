@@ -2,21 +2,34 @@
 <html>
     <head>
         <script src="https://unpkg.com/vue@3.3.2"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/lumen/bootstrap.min.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet"  />
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-  integrity="sha384-5L2r0SMLQHeGdO/5Ex3EfNMT4bgzU7h+qZ0lKjUq5WhmX6zIucWcgfho/+mN/y1d"
-  crossorigin="anonymous">
+        <link href=" https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css " rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
         <style>
             .row {
                 margin-bottom: 3px;
             }
-            
+            .form-control:disabled {
+                background-color: white;
+            }
+            body {
+                background-color: #f4e3ff;
+            }
+            /* .big-title {
+                font-family: 'Verdana';
+            }
+            .main-title {
+                font-family: 'Century Gothic';
+            }
+            .sub-title {
+                font-family: 'Lucida Sans';
+            } */
         </style>
     </head>
     <body>
-        <div id="mainApp" class="container-fluid p-3">
+        <div id="mainApp" class="container-fluid p-5">
             <div class="container-fluid">
                 <br/>
                 <!-- Reviewer Data -->
@@ -25,71 +38,32 @@
                         <div class="container-fluid">
                             <div class="align-items-center" style="display: flex">
                                 <i class="bi bi-info-circle pb-2 fa-lg me-2"></i>
-                                <h3 class="ml-3"><b><i>Reviewer Info:</i></b></h3>
+                                <h3 class="ml-3 big-title"><b>Member Info:</b></h3>
                             </div>
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-12 col-md-6 col-lg-6 text-left">
-                                            <h5><i>Name:</i></h5>
-                                            <input class="form-control" type="text" :placeholder="customerData.memberName" style="opacity: 1.0" disabled>
-                                            <!-- <h6>{{this.customerData.memberName}}</h6> -->
-                                        </div>
-                                        <div class="col-12 col-md-6 col-lg-6 text-left">
-                                            <h5><i>Member Code:</i></h5>
+                                            <h5 class="main-title">Member Code:</h5>
                                             <input class="form-control" type="text" :placeholder="customerData.memberCode" style="opacity: 1.0" disabled>
                                             <!-- <h6>{{this.customerData.memberCode}}</h6> -->
                                         </div>
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5 class="main-title">Name:</h5>
+                                            <input class="form-control" type="text" :placeholder="customerData.memberName" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{this.customerData.memberName}}</h6> -->
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-12 col-md-6 col-lg-6 text-left">
-                                            <h5><i>Contact No.:</i></h5>
-                                            <input class="form-control" type="text" :placeholder="customerData.ordTellNo" style="opacity: 1.0" disabled>
-                                            <!-- <h6>{{this.customerData.ordTellNo}}</h6> -->
-                                        </div>
-                                        <div class="col-12 col-md-6 col-lg-6 text-left">
-                                            <h5><i>Email Address:</i></h5>
-                                            <input class="form-control" type="text" :placeholder="customerData.ordEmail" style="opacity: 1.0" disabled>
+                                            <h5 class="main-title">Email Address:</h5>
+                                            <input class="form-control sub-title" type="text" :placeholder="customerData.ordEmail" style="opacity: 1.0" disabled>
                                             <!-- <h6>{{this.customerData.ordEmail}}</h6> -->
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-12 col-md-6 col-lg-6 text-left">
-                                            <h5><i>Age Range:</i></h5>
-                                            <input class="form-control" type="text" :placeholder="customerAge" style="opacity: 1.0" disabled>
-                                            <!-- <h6>{{customerAge}}</h6> -->
-                                        </div>
-                                        <div class="col-12 col-md-6 col-lg-6 text-left">
-                                            <h5><i>Gender:</i></h5>
-                                            <input class="form-control" type="text" :placeholder="customerGender" style="opacity: 1.0" disabled>
-                                            <!-- <h6>{{customerGender}}</h6> -->
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2">
-                                        <div class="col-12 col-md-6 col-lg-6 text-left">
-                                            <h5><i>State of Residence:</i></h5>
-                                            <input class="form-control" type="text" :placeholder="customerState" style="opacity: 1.0" disabled>
-                                            <!-- <h6>{{customerState}}</h6> -->
-                                        </div>
-                                        <div class="col-12 col-md-6 col-lg-6 text-left">
-                                            <h5><i>Review Date:</i></h5>
-                                            <input class="form-control" type="text" :placeholder="formattedDate" style="opacity: 1.0" disabled>
-                                            <!-- <h6>{{formattedDate}}</h6> -->
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-12 text-left">
-                                            <h5><i>Delivery Address:</i></h5>
-                                            <input class="form-control mb-2" type="text" :placeholder="deliveryAddress" style="opacity: 1.0" disabled>
-                                            <input class="form-control" type="text" :placeholder="deliveryAddressCont" v-bind:visible="notSelfC" style="opacity: 1.0" disabled>
-                                            <!-- <h6>{{deliveryAddress}}</h6>
-                                            <h6 :v-if="notSelfC">{{deliveryAddressCont}}</h6> -->
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col text-left">
-                                            <h5><i>Manual Product Review:</i></h5>
-                                            <h6>{{this.customerData.review}}</h6>
+                                            <h5 class="main-title">Contact No.:</h5>
+                                            <input class="form-control sub-title" type="text" :placeholder="customerData.ordTelNo" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{this.customerData.ordTellNo}}</h6> -->
                                         </div>
                                     </div>
                                 </div>
@@ -99,18 +73,121 @@
                 </div>
                 <spacing></spacing>
 
+                <!-- Delivery Data -->
+                <div class="row">
+                    <div class="col-12 text-left">
+                        <div class="container-fluid">
+                            <div class="align-items-center" style="display: flex">
+                                <i class="bi bi-box-seam pb-2 fa-lg me-2"></i>
+                                <h3 class="ml-3 big-title"><b>Delivery Info:</b></h3>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5 class="main-title">Delivery Name:</h5>
+                                            <input class="form-control sub-title" type="text" :placeholder="customerData.delName" style="opacity: 1.0" disabled>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5 class="main-title">Delivery Contact No.:</h5>
+                                            <input class="form-control sub-title" type="text" :placeholder="customerData.delTel" style="opacity: 1.0" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-left">
+                                            <h5 class="main-title">Delivery Address:</h5>
+                                            <input class="form-control mb-2 sub-title" type="text" :placeholder="deliveryAddress" disabled style="opacity: 1;">
+                                            <input class="form-control sub-title" v-if="customerData.deliveryType != 2" :placeholder="deliveryAddressCont" type="text" disabled style="opacity: 1;">
+                                        </div>
+                                    </div>
+                                    <div class="row" v-if="customerData.deliveryType != 2">
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5 class="main-title">Delivery State:</h5>
+                                            <input class="form-control sub-title" type="text" :placeholder="customerData.delStateName" style="opacity: 1.0" disabled>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5 class="main-title">Delivery City:</h5>
+                                            <input class="form-control sub-title" type="text" :placeholder="customerData.delCityName" style="opacity: 1.0" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-1" v-if="customerData.deliveryType != 2">
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5 class="main-title">Delivery Post Code:</h5>
+                                            <input class="form-control sub-title" type="text" :placeholder="customerData.delPostCodeCode" style="opacity: 1.0" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3"  v-if="customerData.deliveryType != 2">
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5 class="main-title">Courier Company:</h5>
+                                            <input class="form-control sub-title" type="text" :placeholder="customerData.courierCompany" style="opacity: 1.0" disabled>
+                                        </div>
+                                        <!-- <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5 class="main-title">Courier ID:</h5>
+                                            <input class="form-control sub-title" type="text" :placeholder="customerData.courierId" style="opacity: 1.0" disabled>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <spacing></spacing>
+
+                <!-- Reviewer Data -->
+                <div class="row">
+                    <div class="col-12 text-left">
+                        <div class="container-fluid">
+                            <div class="align-items-center" style="display: flex">
+                                <i class="bi bi-pen pb-2 fa-lg me-2"></i>
+                                <h3 class="ml-3 big-title"><b>Review Info:</b></h3>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5 class="main-title">Review Date:</h5>
+                                            <input class="form-control sub-title" type="text" :placeholder="formattedDate" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{formattedDate}}</h6> -->
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5 class="main-title">State:</h5>
+                                            <input class="form-control sub-title" type="text" :placeholder="customerState" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{customerState}}</h6> -->
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5 class="main-title">Age Range:</h5>
+                                            <input class="form-control sub-title" type="text" :placeholder="customerAge" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{customerAge}}</h6> -->
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 text-left">
+                                            <h5 class="main-title">Gender:</h5>
+                                            <input class="form-control sub-title" type="text" :placeholder="customerGender" style="opacity: 1.0" disabled>
+                                            <!-- <h6>{{customerGender}}</h6> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <spacing></spacing>
+
+                
+
                 <!-- Picture Section -->
                 <div class="container-fluid">
                     <div class="align-items-center" style="display: flex">
                         <i class="bi bi-file-earmark-image pb-2 fa-lg me-2"></i>
-                        <h3 class="ml-3"><b><i>Attached Pictures:</i></b></h3>
+                        <h3 class="ml-3 big-title"><b>Attached Pictures:</b></h3>
                     </div>
                     <div class="row">
                         <!-- Before-picture -->
                         <div class="col-12 col-md-5 col-lg-5">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Sample picture <b><i>BEFORE</i></b> applying product:</h4>
+                                    <h4 class="card-title main-title">Sample picture <b>BEFORE</b> applying product:</h4>
                                     <img :src="customerData.img1" style="width:200px; height:200px" class="align-items-center" alt="No picture submitted">
                                 </div>
                             </div>
@@ -119,7 +196,7 @@
                         <div class="col-12 col-md-5 col-lg-5">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">7 days <b><i>AFTER</i></b> applying product:</h4>
+                                    <h4 class="card-title main-title0">7 days <b>AFTER</b> applying product:</h4>
                                     <img :src="customerData.img2" style="width:200px; height:200px" alt="No picture submitted">
                                 </div>
                             </div>
@@ -131,6 +208,12 @@
                 <spacing></spacing>
 
                 <!-- Accordion for the Survey Response -->
+                <div class="container-fluid">
+                    <div class="align-items-center" style="display: flex">
+                        <i class="bi bi-journals pb-2 fa-lg me-2"></i>
+                        <h3 class="ml-3 big-title"><b>Detailed Responses:</b></h3>
+                    </div>
+                </div>
                 <div class="accordion" id="answerAccordion">
                     <!-- Section A Questions -->
                     <div class="accordion-item">
@@ -144,10 +227,10 @@
                             <div class="accordion-body">
                                 <div class="container">
                                     <div class="row">
-                                        <h5><b>Customer Skin Type:</b> ( {{customerSkinType}} )</h5>
-                                        <h5>List of reactions: </h5>
+                                        <h5 class="big-title"><b>Customer Skin Type:</b> ( {{customerSkinType}} )</h5>
+                                        <h5 class="main-title">List of reactions: </h5>
                                         <div class="col text-left">
-                                            <ul>
+                                            <ul style="list-style-type:none;">
                                                 <li v-for="(response, idex) in customerData.qaSet">
                                                     <section-a-line :index="idex" :ans="response"></section-a-line>
                                                 </li>
@@ -170,7 +253,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col text-left">
-                                            <ul>
+                                            <ul style="list-style-type:none;">
                                                 <li v-for="(ans, idex) in customerData.qaSet">
                                                     <!-- <sectionB-line :dataSet="customerData.qaSet[idex]" :index="(idex + 1)" :response="customerData.qaSet[idex]"></sectionB-line> -->
                                                     <section-b-line :sequence="idex" :answer="ans"></section-b-line>
@@ -182,31 +265,44 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Additional Benefits Response -->
+                    <!-- Manual review -->
                     <div class="accordion-item">
                         <h3 class="accordion-header" id="sectionCHeader">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseC" aria-expanded="false" aria-controls="collapseC">
-                                Additional Benefits Record
+                                Product Review
                             </button>
                         </h3>
                         <div id="collapseC" class="accordion-collapse collapse" aria-labelledby="sectionCHeader" data-bs-parent="#answerAccordion">
                             <div class="accordion-body">
-                                <h5><u><i>Did the product provide any additional benefits other than the mentioned benefits?</i></u></h5>
-                                <h6 style="word-wrap: break-word">{{customerData.comment1}}</h6>
+                                <h6 class="sub-title" style="word-wrap: break-word">{{customerData.review}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Additional Benefits Response -->
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="sectionDHeader">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseD" aria-expanded="false" aria-controls="collapseD">
+                                Additional Benefits Record
+                            </button>
+                        </h3>
+                        <div id="collapseD" class="accordion-collapse collapse" aria-labelledby="sectionDHeader" data-bs-parent="#answerAccordion">
+                            <div class="accordion-body">
+                                <h5 class="main-title"><u>Did the product provide any additional benefits other than the mentioned benefits?</u></h5>
+                                <h6 class="sub-title" style="word-wrap: break-word">{{customerData.comment1}}</h6>
                             </div>
                         </div>
                     </div>
                     <!-- Misc Comments -->
                     <div class="accordion-item">
-                        <h3 class="accordion-header" id="sectionDHeader">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseD" aria-expanded="false" aria-controls="collapseD">
+                        <h3 class="accordion-header" id="sectionEHeader">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseE" aria-expanded="false" aria-controls="collapseE">
                                 Miscellaneous Comments
                             </button>
                         </h3>
-                        <div id="collapseD" class="accordion-collapse collapse" aria-labelledby="sectionDHeader" data-bs-parent="#answerAccordion">
+                        <div id="collapseE" class="accordion-collapse collapse" aria-labelledby="sectionEHeader" data-bs-parent="#answerAccordion">
                             <div class="accordion-body">
-                                <h5><u><i>Do you have any other comments to add on?</i></u></h5>
-                                <h6 style="word-wrap: break-word">{{customerData.comment2}}</h6>
+                                <h5 class="main-title"><u>Do you have any other comments to add on?</u></h5>
+                                <h6 class="sub-title" style="word-wrap: break-word">{{customerData.comment2}}</h6>
                             </div>
                         </div>
                     </div>
@@ -215,28 +311,49 @@
 
                 <!-- Three-Option Slider for APPROVAL -->
                 <div class="container-fluid">
+                    <div class="align-items-center" style="display: flex">
+                        <i class="bi bi-check-circle     pb-2 fa-lg me-2"></i>
+                        <h3 class="ml-3 big-title"><b>Image Approval:</b></h3>
+                    </div>
+                </div>
+                <div class="container-fluid">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Confirm Approval Status:</h5>
                             <div class="btn-group">
-                                <input type="radio" @click="toggleStatus(1)" v-bind:checked="approveChecked" class="btn-check" name="options" id="approveStatus" autocomplete="off">
+                                <!-- Approve Button -->
+                                <input type="radio" @click="toggleStatus(1)" v-bind:checked="approveChecked" :disabled="customerData.approveRejectStatus == 1" class="btn-check" name="options" id="approveStatus" autocomplete="off">
                                 <label class="btn btn-outline-success" for="approveStatus">Approve</label>
+                                <button v-if="isLoading" class="btn btn-outline-success" type="button">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </button>
                             
-                                <input type="radio" @click="toggleStatus(2)" v-bind:checked="pendingChecked" class="btn-check" name="options" id="pendingStatus" autocomplete="off" checked>
+                                <!-- Pending Button -->
+                                <input type="radio" @click="toggleStatus(0)" v-bind:checked="pendingChecked" :disabled="customerData.approveRejectStatus == 1" class="btn-check" name="options" id="pendingStatus" autocomplete="off" checked>
                                 <label class="btn btn-outline-secondary" for="pendingStatus">Set to Pending</label>
-                            
-                                <input type="radio" @click="toggleStatus(3)" v-bind:checked="rejectChecked" class="btn-check" name="options" id="rejectStatus" autocomplete="off">
+                                <button v-if="isLoading" class="btn btn-outline-secondary" type="button">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </button>
+
+                                <!-- Reject Button -->
+                                <input type="radio" @click="toggleStatus(2)" v-bind:checked="rejectChecked" :disabled="customerData.approveRejectStatus == 1" class="btn-check" name="options" id="rejectStatus" autocomplete="off">
                                 <label class="btn btn-outline-danger" for="rejectStatus">Reject</label>
+                                <button v-if="isLoading" class="btn btn-outline-danger" type="button">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </button>
+                            
                             </div>
+                            <h6 v-if="customerData.approveRejectStatus == 1" class="mt-2" style="color:green">Review already APPROVED!</h6>
+                            <h6 v-if="customerData.approveRejectStatus == 2" class="mt-2" style="color:red">Review already REJECTED!</h6>
                         </div>
                     </div>
                 </div>
-
                 <br/><br/><br/>
             </div>
         </div>
     </body>
 </html>
+<script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js "></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // Variables to control and extract the ID from the URL
@@ -255,7 +372,7 @@
                 ageRangeList: ["19 and below / 以下", "20 - 29", "30 - 39", "40 - 49", "50 and above / 以上"],
                 genderList: ["Male", "Female"],
                 skinTypeList: ["Normal / 中性", "Oily / 油性", "Dry / 干性", "A Combination of the above / 混合", "Sensitive / 敏感"],
-                stateList: ["Johor", "Kedah", "Kelantan", "Kuala Lumpur", "Labuan", "Melaka", "Negeri Sembilan", "Pahang", "Perak", "Perlis", "Pulau Pinang", "Putrajaya", "Sabah", "Sarawak", "Selangor", "Terengganu"],
+                stateList: ["Singapore", "Johor", "Kedah", "Kelantan", "Kuala Lumpur", "Labuan", "Melaka", "Negeri Sembilan", "Pahang", "Perak", "Perlis", "Pulau Pinang", "Putrajaya", "Sabah", "Sarawak", "Selangor", "Terengganu"],
                 formattedDate: "",
                 approvedChecked: false,
                 pendingChecked: false,
@@ -263,6 +380,8 @@
                 deliveryAddress: "",
                 deliveryAddressCont: "",
                 notSelfC: false,
+                isLoading: false,
+
             }   
         },
         methods: {
@@ -270,46 +389,78 @@
                 await axios.get(`${customerResponseURL}${customerID}`)
                 .then (res => {
                     this.customerData = res.data[0]
-                })
-                this.customerAge = this.ageRangeList[this.customerData.age]
-                this.customerGender = this.genderList[this.customerData.gender]
-                this.customerSkinType = this.skinTypeList[this.customerData.skinType]
-                this.customerState = this.stateList[this.customerData.stateId]
+                    this.customerAge = this.ageRangeList[(this.customerData.age -1)]
+                    this.customerGender = this.genderList[(this.customerData.gender - 1)]
+                    this.customerSkinType = this.skinTypeList[(this.customerData.skinType - 1)]
+                    this.customerState = this.stateList[this.customerData.stateId]
 
-                // Variables to format the date
-                const retrieveDate = new Date(this.customerData.reviewDate)
-                const options = {month: 'long', day: 'numeric', year : 'numeric'}
-                this.formattedDate = retrieveDate.toLocaleDateString('en-US', options)
+                    console.log(this.customerData)
 
-                switch(this.customerData.approveRejectStatus) {
-                    case 0:
-                        this.pendingChecked = true
-                        break;
-                    case 1:
-                        this.approveChecked = true
-                        break;
-                    case 2:
-                        this.rejectChecked = true
-                        break;
-                }
-                switch(this.customerData.deliveryType) {
-                    case 2:
-                        this.deliveryAddress = "SELF-COLLECT"
-                        this.notSelfC = false
-                        break;
-                    default:
-                        this.deliveryAddress = this.customerData.delAddress1
-                        this.deliveryAddressCont = this.customerData.delAddress2
-                        this.notSelfC = true
-                        break;
-                }
+                    // Variables to format the date
+                    const retrieveDate = new Date(this.customerData.reviewDate)
+                    const options = {month: 'long', day: 'numeric', year : 'numeric'}
+                    this.formattedDate = retrieveDate.toLocaleDateString('en-US', options)
+                    
+                    switch(this.customerData.approveRejectStatus) {
+                        case 0:
+                            this.pendingChecked = true
+                            break;
+                        case 1:
+                            this.approveChecked = true
+                            break;
+                        case 2:
+                            this.rejectChecked = true
+                            break;
+                    }
+                    switch(this.customerData.deliveryType) {
+                        case 2:
+                            this.deliveryAddress = "SELF-COLLECT"
+                            this.notSelfC = false
+                            break;
+                        default:
+                            this.deliveryAddress = this.customerData.delAddress1
+                            this.deliveryAddressCont = this.customerData.delAddress2
+                            this.notSelfC = true
+                            break;
+                    }
+                    })
+                
             },
 
             toggleStatus: async function(status_index) {
+                this.isLoading = true
+                console.log(status_index)
                 this.customerData.approveRejectStatus = status_index
-                await axios.get(``)
+                console.log(this.customerData.approveRejectStatus)
+                await axios.put(`https://alpha.returnlegacy.com/rlportalapi/api/campaign/moxi/review`, this.customerData)
                 .then (res => {
-                    // 
+                    if (res.data.success == 0) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Action Unsuccessful!',
+                            text: 'Please check your Internet Connection, or if the error persists, make a report to the IT staff.',
+                        })
+                    }
+                    else {
+                        if (res.data.docNo == null) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Change Updated Successfully!',
+                            })
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Change Updated Successfully!',
+                                text: `Invoice number: ${res.data.docNo}`
+                            })
+                        }
+                    }
+                    
+                    console.log(res.data.success)
+                    console.log(res.data.message)
+                    this.isLoading = false
+                    this.extractData()
                 })
                 // this.extractData()
             },
@@ -335,7 +486,7 @@
             <div class="d-flex align-items-center gap-2">
                 <div class="d-flex justify-content-start align-items-center mr-2">
                     <div>
-                        <h6>{{this.conditionList?.[this.index]}}</h6>
+                        <h6 class="sub-title">{{this.conditionList?.[this.index]}}</h6>
                     </div>
                 </div>
                 <div class="text-left">
@@ -372,8 +523,8 @@
             answer: { type: Number, required: true }
         },
         template:`
-            <h5>Question {{ sequence + 1 }} : {{ questionArray?.[sequence] }}</h5>
-            <h6>{{ responseGrade?.[answer] }} </h6>
+            <h5 class="main-title">Question {{ sequence + 1 }} : {{ questionArray?.[sequence] }}</h5>
+            <h6 class="sub-title">{{ responseGrade?.[(answer - 1)] }} </h6>
         `,
     })
 
