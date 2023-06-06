@@ -256,6 +256,9 @@
                 .then (res => {
                     this.reviewList = res.data
                     console.log(this.reviewList)
+                    this.approvalTally.Pending = 0
+                    this.approvalTally.Approved = 0
+                    this.approvalTally.Rejected = 0
                     for(let i=0; i<this.reviewList.length; i++) {
                         if (this.reviewList[i].approveRejectStatus == 0) {
                             this.approvalTally.Pending += 1
