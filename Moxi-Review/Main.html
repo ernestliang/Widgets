@@ -256,14 +256,14 @@
                 .then (res => {
                     this.reviewList = res.data
                     console.log(this.reviewList)
-                    for(let i=0; i<reviewList.length; i++) {
-                        if (reviewList[i].approveRejectStatus == 0) {
+                    for(let i=0; i<this.reviewList.length; i++) {
+                        if (this.reviewList[i].approveRejectStatus == 0) {
                             this.approvalTally.Pending += 1
                         }
-                        else if (reviewList[i].approveRejectStatus == 1) {
+                        else if (this.reviewList[i].approveRejectStatus == 1) {
                             this.approvalTally.Approved += 1
                         }
-                        else if (reviewList[i].approveRejectStatus == 2) {
+                        else if (this.reviewList[i].approveRejectStatus == 2) {
                             this.approvalTally.Rejected += 1
                         }
                        
